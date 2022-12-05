@@ -10,5 +10,5 @@ public interface ShowStudentDetailsApi
 
     String BASE_URL = "https://imraju.com/labfinal/api/";
     @GET("allStudents.php")
-    Call<List<ModelPostData>> GetStudentDetails();
+    Call<ModelStatus> GetStudentDetails();
 }

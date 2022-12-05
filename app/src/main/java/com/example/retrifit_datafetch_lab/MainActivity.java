@@ -56,20 +56,23 @@ public class MainActivity extends AppCompatActivity {
         ShowStudentDetailsApi showStudentDetailsApi = retrofit.create(ShowStudentDetailsApi.class);
         Log.e("Gop", "Data Start RCV4");
 
-        Call<List<ModelPostData>> call = showStudentDetailsApi.GetStudentDetails();
+        Call<ModelStatus> call = showStudentDetailsApi.GetStudentDetails();
         Log.e("Gop", "Data Start RCV5");
 
-        call.enqueue(new Callback<List<ModelPostData>>() {
+        call.enqueue(new Callback<ModelStatus>() {
 
             @Override
-            public void onResponse(Call<List<ModelPostData>> call, Response<List<ModelPostData>> response) {
-                List<ModelPostData> lists = response.body();
+            public void onResponse(Call<ModelStatus> call, Response<ModelStatus> response) {
+                List <ModelPostData> lists = response.body().getStudents();
+
                 Log.e("Gop", "Data Start RCV6");
+
                 for(ModelPostData mpd:lists){
                     String content = "";
                     content+="name:"+mpd.getName();
                     listItem.add(content);
                 }
+
                 adapter.notifyDataSetChanged();
 
                     Log.e("Gop", "Data RCV Done");
@@ -77,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ModelPostData>> call, Throwable t) {
-                Log.e("Gop", "Data NotRCV");
+            public void onFailure(Call<ModelStatus> call, Throwable t) {
+                Log.e("Gop", "Data NotRCV\n"+t.toString());
                 Toast.makeText(getApplicationContext(),t.toString(),Toast.LENGTH_LONG).show();
             }
         });
